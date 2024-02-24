@@ -11,6 +11,7 @@
                         <h3 class="box-title">Daftar Ulasan Buku</h3>
                         <div class="box-tools">
                             <a href="{{ route('ulasanbuku.create') }}" class="btn btn-primary btn-sm">Tambah Ulasan</a>
+                            <a href="{{ route('ulasanbuku.ulasanbukupdf') }}" class="btn btn-primary btn-sm">Unduh Data ulasanbuku</a>
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -19,7 +20,6 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Ulasan ID</th>
                                     <th>User ID</th>
                                     <th>Buku ID</th>
                                     <th>Ulasan</th>
@@ -32,13 +32,17 @@
                                 @foreach($UlasanBuku as $item)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $item->UlasanID }}</td>
                                     <td>{{ $item->UserID }}</td>
                                     <td>{{ $item->BukuID }}</td>
                                     <td>{{ $item->Ulasan }}</td>
                                     <td>{{ $item->Rating }}</td>
                                     <td>
                                         <a href="{{ route('ulasanbuku.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <form action="{{ route('peminjaman.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
+                                            @csrf
+                                            {{-- @method('delete') --}}
+                                            <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

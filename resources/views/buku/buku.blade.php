@@ -7,6 +7,7 @@
                 <h3 class="box-title">Daftar Buku</h3>
                 <div class="box-tools pull-right">
                     <a href="{{ route('buku.create') }}" class="btn btn-primary btn-sm">Tambah Buku</a>
+                    <a href="{{ route('buku.bukupdf') }}" class="btn btn-primary btn-sm">Unduh Data Buku</a>
                 </div>
             </div>
             <div class="box-body">
@@ -34,7 +35,7 @@
                                 <a href="{{ route('buku.edit', $item->id) }}" class="btn btn-warning btn-xs">Edit</a>
                                 <form action="{{ route('buku.destroy', $item->id) }}" method="post" class="inline" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                     @csrf
-                                    @method('delete')
+                                    {{-- @method('delete') --}}
                                     <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                 </form>
                             </td>

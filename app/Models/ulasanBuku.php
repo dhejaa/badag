@@ -9,7 +9,7 @@ class ulasanBuku extends Model
 {
     use HasFactory;
 
-    protected $fillabel = [
-        'ulasan', 'rating'
+    protected $fillable = [
+        'UserID', 'BukuID','Ulasan', 'Rating'
     ];
 }

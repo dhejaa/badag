@@ -2,72 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\kategoribuku;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class kategoribukuController extends Controller
+class KategoribukuController extends Controller
 {
-    public function index(){
-        $kategoribuku = kategoribuku :: all();
-        return view('kategoribuku',compact('kategoribuku'));
+    public function index()
+    {
+        $kategoribuku = kategoribuku::all();
+        return view('kategoribuku.kategoribuku', compact('kategoribuku'));
     }
-    
+
     public function create()
     {
-        return view('create');
+        return view('kategoribuku.create');
     }
 
-    /**
-     * store a newly created resource in stroage.
-     */
     public function store(Request $request)
     {
-$kategoribuku = new kategoribuku;
+        $request->validate([
+            'NamaKategori' => 'required|string|max:255',
+        ]);
 
-$kategoribuku->namakategori = $request->namabuku;
-$kategoribuku->save();
+        kategoribuku::create($request->all());
 
-return redirect()->route('kategoribuku.index');
+        return redirect()->route('kategoribuku.index')
+            ->with('success', 'Kategori buku berhasil ditambahkan.');
     }
 
-    public function show(kategoribuku $kategoribuku)
-    {
-        //
-    }
-
-    /**
-     * show the form for editing the specifited rosource.
-     */
     public function edit($id)
     {
         $kategoribuku = kategoribuku::find($id);
-        return view('edit', compact('kategoribuku'));
+        return view('kategoribuku.edit', compact('kategoribuku'));
     }
 
-    /**
-     * update the specifited resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        $update = kategoribuku::find($id);
-
-        $update ->update([
-            'NamaKategori' => $request->get('NamaKategori'),
+        $request->validate([
+            'NamaKategori' => 'required|string|max:255',
         ]);
 
-        return redirect()->route('kategoribuku.index')->rith('succes','kategoribuku edit successfully');
+        $kategoribuku = kategoribuku::find($id);
+        $kategoribuku->update($request->all());
+
+        return redirect()->route('kategoribuku.index')
+            ->with('success', 'Kategori buku berhasil diperbarui.');
     }
 
-    /**
-     * remove the specifited resource form storage.
-     */
     public function destroy($id)
     {
         $kategoribuku = kategoribuku::findOrFail($id);
-        if ($kategoribuku){
-            $kategoribuku->delete();
-            return redirect()->route('kategoribuku.index')->with('success','Data kategoribuku berhasil dihapus');
-        };
-        return redirect()->route('kategoribuku.index')->with('eror','Data kategoribuku tidak ditemukan');
+        $kategoribuku->delete();
+
+        return redirect()->route('kategoribuku.index')
+            ->with('success', 'Kategori buku berhasil dihapus.');
+    }
+
+    public function generatePDF()
+    {
+        $kategoribuku = kategoribuku::all();
+
+        $pdf = PDF::loadView('kategoribuku.kategoripdf', ['kategoribuku' => $kategoribuku]);
+
+        return $pdf->stream('laporan-kategoribuku.pdf');
     }
 }

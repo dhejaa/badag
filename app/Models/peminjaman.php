@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class peminjaman extends Model
+class Peminjaman extends Model
 {
     use HasFactory;
 
-    protected $fillabel = [
-        'tanggal_peminjaman', 'tanggal_pengembalian', 'status_peminjaman'
+    protected $table = 'peminjamen';
+
+    protected $fillable = [
+        'UserID', 'BukuID', 'TanggalPeminjaman', 'TanggalPengembalian', 'StatusPeminjaman'
     ];
 }

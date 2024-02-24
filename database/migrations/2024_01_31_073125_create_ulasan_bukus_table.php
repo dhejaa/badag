@@ -18,6 +18,7 @@ class CreateUlasanBukusTable extends Migration
             $table->integer('UserID');
             $table->integer('BukuID');
             $table->text('Ulasan');
+            $table->integer('Rating');
             $table->timestamps();
         });
     }

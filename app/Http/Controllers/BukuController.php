@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\buku;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BukuController extends Controller
 {
     public function index(){
         $buku = buku :: all();
-        return view('buku',compact('buku'));
+        return view('buku.buku',compact('buku'));
     }
 
     public function create()
     {
-        return view('create');
+        return view('buku.create');
     }
 
-        /**
-         * store a newly created resource in stroage.
-         */
-        public function store(Request $request)
+    /**
+     * store a newly created resource in stroage.
+     */
+    public function store(Request $request)
     {
     $buku = new Buku;
 
@@ -43,8 +45,8 @@ class BukuController extends Controller
      */
     public function edit($id)
     {
-        $buku = Buku::find($id);
-        return view('edit', compact('buku'));
+        $buku = buku::find($id);
+        return view('.buku.edit', compact('buku'));
     }
 
     /**
@@ -52,17 +54,27 @@ class BukuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $update = buku::find($id);
-
-        $update ->update([
-            'judul' => $request->get('judul'),
-            'penulis' => $request->get('penulis'),
-            'penerbit' => $request->get('penerbit'),
-            'TahunTerbit' => $request->get('TahunTerbit'),
+        $data = $request->validate([
+            'judul' => 'required|string|max:255',
+            'penulis' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
+            'TahunTerbit' => 'required|date',
         ]);
-
-        return redirect()->route('buku.index')->with('success','buku edit successfully');
+    
+        // dd($data);
+        
+        // Kode di bawah ini tidak akan dijalankan karena `dd()` di atas.
+        // Ini hanya contoh jika Anda ingin melanjutkan setelah validasi.
+        buku::findOrFail($id)->update([
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'penerbit' => $request->penerbit,
+            'TahunTerbit' => $request->TahunTerbit,
+        ]);
+    
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil diperbarui.');
     }
+    
 
     /**
      * remove the specified resource form storage.
@@ -75,5 +87,14 @@ class BukuController extends Controller
             return redirect()->route('buku.index')->with('success','Data buku berhasil dihapus');
         }
         return redirect()->route('buku.index')->with('error','Data buku tidak ditemukan');
+    }
+
+    public function generatePDF()
+    {
+        $buku = buku::all();
+
+        $pdf = PDF::loadView('buku.bukupdf', ['buku' => $buku]);
+
+        return $pdf->stream('laporan-buku.pdf');
     }
 }
