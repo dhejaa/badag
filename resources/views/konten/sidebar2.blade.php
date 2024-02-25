@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/home" class="brand-link">
         <img src="{{ asset('assets/AdminLTE') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">AdminLTE 3</span>
@@ -15,7 +15,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Dheza Zahwa</a>
+                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -31,7 +31,7 @@
                         </p>
                     </a>
                 </li>
-                  <li class="nav-item">
+                                <li class="nav-item">
                     <a href="/buku" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
@@ -39,32 +39,10 @@
                         </p>
                     </a>
                 </li>
+ 
                 <li class="nav-item">
-                    <a href="/peminjamann" class="nav-link">
-                        <i class="nav-icon fas fa-clipboard-user"></i>
-                        <p>
-                            Peminjamann
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/kategoribuku" class="nav-link">
-                        <i class="nav-icon fas fa-icons"></i>
-                        <p>
-                            Kategori
-                        </p>
-                    </a>
-                </li>
-                 <li class="nav-item">
-                    <a href="/ulasanbuku" class="nav-link">
-                        <i class="nav-icon fas fa-comments"></i>
-                        <p>
-                            Ulasan Buku
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('logout')}}" class="nav-link">
+                    <a onclick="event.preventDefault();
+    document.getElementById('logout-form').submit();" href="{{ route('logout') }}" class="nav-link">
                         <i class="nav-icon fas fa-right-from-bracket"></i>
                         <p>
                             Logout
@@ -73,7 +51,8 @@
                 </li>
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>

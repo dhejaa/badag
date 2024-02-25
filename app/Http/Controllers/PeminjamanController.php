@@ -11,8 +11,7 @@ class PeminjamanController extends Controller
 {
     public function index()
   {
-      $peminjaman = peminjaman::all();
-      return view('peminjaman.peminjaman', compact('peminjaman'));
+      return view('peminjaman.peminjaman');
   }
 
   public function create()
@@ -31,7 +30,7 @@ class PeminjamanController extends Controller
      $peminjaman->StatusPeminjaman = $request->StatusPeminjaman;
      $peminjaman->save();
 
-      return redirect()->route('peminjaman.index')
+      return redirect()->route('Peminjamann.index')
           ->with('success', 'Peminjaman berhasil ditambahkan.');
   }
 
@@ -67,7 +66,7 @@ class PeminjamanController extends Controller
         'StatusPeminjaman' => $request->input('StatusPeminjaman')
     ]);
 
-    return redirect()->route('peminjaman.index')
+    return redirect()->route('peminjamann.index')
         ->with('success', 'Peminjaman berhasil diperbarui.');
 }
 

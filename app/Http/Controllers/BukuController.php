@@ -11,7 +11,7 @@ class BukuController extends Controller
 {
     public function index(){
         $buku = buku :: all();
-        return view('buku.buku',compact('buku'));
+        return view('layout.mainbuku',compact('buku'));
     }
 
     public function create()

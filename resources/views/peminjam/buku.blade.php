@@ -1,4 +1,5 @@
-
+@extends("layout.main")
+@section("konten")
 <div class="content-wrapper">
     <section class="content">
         <div class="box">
@@ -31,12 +32,8 @@
                             <td>{{ $item->penerbit }}</td>
                             <td>{{ $item->TahunTerbit }}</td>
                             <td>
-                                <a href="{{ route('buku.edit', $item->id) }}" class="btn btn-warning btn-xs">Edit</a>
-                                <form action="{{ route('buku.destroy', $item->id) }}" method="post" class="inline" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
-                                    @csrf
-                                    {{-- @method('delete') --}}
-                                    <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
-                                </form>
+                                <a class="btn btn-warning" href="{{route ('peminjam.create', $item->id)}}"><i
+                                    class="fas fa-pencil-alt"></i></a>&nbsp; pinjam
                             </td>
                         </tr>
                         @endforeach
@@ -46,4 +43,4 @@
         </div>
     </section>
 </div>
-
+@endsection

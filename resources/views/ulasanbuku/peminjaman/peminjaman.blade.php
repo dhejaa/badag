@@ -28,7 +28,7 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            {{-- <tbody>
+                            <tbody>
                                 @php $no = 1; @endphp
                                 @foreach($peminjaman as $item)
                                 <tr>
@@ -42,13 +42,13 @@
                                         <a href="{{ route('peminjaman.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                         <form action="{{ route('peminjaman.destroy', $item->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')">
                                             @csrf
-                                            @method('delete')
+                                            {{-- @method('delete') --}}
                                             <button type="submit" class="btn btn-danger btn-xs">Hapus</button>
                                         </form>
                                     </td>
                                 </tr>
                                 @endforeach
-                            </tbody> --}}
+                            </tbody>
                         </table>
                     </div>
                     <!-- /.box-body -->
